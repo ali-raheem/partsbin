@@ -1,8 +1,9 @@
-module piso (clk, latch, din, dout, rst);
+module piso (clk, latch, din, ser, dout, rst);
    parameter WIDTH = 8;
    input clk;
    input latch;
    input rst;
+   input ser;
    input [WIDTH-1:0] din;
    output reg 	     dout;
 
@@ -17,6 +18,7 @@ module piso (clk, latch, din, dout, rst);
       else begin
 	 dout <= data[0];
 	 data[WIDTH-2:0] <= data[WIDTH-1:1];
+	 data[0] <= ser;
       end
    end
 endmodule // piso

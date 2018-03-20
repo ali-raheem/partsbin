@@ -10,6 +10,7 @@ module piso_tb();
 			 .latch(latch),
 			 .rst(rst),
 			 .din(din),
+			 .ser(0),
 			 .dout(dout)
 			 );
    initial begin
