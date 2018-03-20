@@ -3,6 +3,7 @@ module piso_tb();
    reg latch;
    reg rst;
    reg [7:0] din;
+   reg 	     ser;
    wire 	   dout;
 
    piso #(.WIDTH(8)) DUT(
@@ -10,24 +11,60 @@ module piso_tb();
 			 .latch(latch),
 			 .rst(rst),
 			 .din(din),
-			 .ser(0),
+			 .ser(ser),
 			 .dout(dout)
 			 );
    initial begin
       $dumpfile("piso_test.vcd");
       $dumpvars(0, piso_tb);
+      $dumpfile("piso.vcd");
+      $dumpvars(0, DUT);
       rst = 1;
+      ser = 0;
       latch = 0;
       clk = 0;
       din = 8'b0;
-      #15
+      #10
 	rst = 0;
       #5
-	din = 8'b10101010;
+	din = 8'h55;
+      latch = 1;
+      #15
+	latch = 0;
+      din = 0;
+      #100
+	din = 8'hAA;
+      latch = 1;
+      #3
+	latch = 0;
+      din = 0;
+      #100
+	din = 8'h0f;
+      latch = 1;
+      #10
+	latch = 0;
+      din = 0;
+      #100
+	din = 8'hcd;
       latch = 1;
       #5
 	latch = 0;
-      #50
+      din = 0;
+      #100
+      #100
+	din = 8'b10000000;
+      latch = 1;
+      #5
+	latch = 0;
+      din = 0;
+      #100
+	din = 8'hf0;
+      latch = 1;
+      #5
+	latch = 0;
+      din = 0;
+      #100
+	
 	$finish;
    end // initial begin
 

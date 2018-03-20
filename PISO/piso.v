@@ -13,12 +13,12 @@ module piso (clk, latch, din, ser, dout, rst);
       data <= din;
    end
    always @ (posedge clk) begin
-      if(rst)
-	data <= 1'b0;
-      else begin
-	 dout <= data[0];
+      if(~latch) begin
+	dout <= data[0];
 	 data[WIDTH-2:0] <= data[WIDTH-1:1];
-	 data[0] <= ser;
+	 data[WIDTH-1] <= ser;
       end
    end
+   always @ (posedge rst) data <= 0;
+
 endmodule // piso
