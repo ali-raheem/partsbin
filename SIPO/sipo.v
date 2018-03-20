@@ -19,6 +19,6 @@ module sipo (clk, d, q, rst, oe, ie);
       end
    end
 
-   assign q = oe ? out: 0;
+   assign q = oe ? out: {{WIDTH}{1'bz}};
 
 endmodule // sipo
