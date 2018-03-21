@@ -35,7 +35,7 @@ module piso_tb();
       #100
 	din = 8'hAA;
       latch = 1;
-      #3
+      #7
 	latch = 0;
       din = 0;
       #100
@@ -47,7 +47,7 @@ module piso_tb();
       #100
 	din = 8'hcd;
       latch = 1;
-      #5
+      #7
 	latch = 0;
       din = 0;
       #100

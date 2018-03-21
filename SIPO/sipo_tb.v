@@ -28,7 +28,7 @@ module sipo_tb ();
       $dumpfile("sipo_test.vcd");
       $dumpvars(0, sipo_tb);
       ie = 1;
-      oe = 0;
+      oe = 1;
       rst = 0;
       d = 0;
       clk = 0;
@@ -62,6 +62,5 @@ module sipo_tb ();
       $finish;
    end // initial begin
 
-   always #5
-     clk = ~ clk;
+   always #5 clk = ~clk;
 endmodule // sipo_tb

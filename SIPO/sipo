@@ -24,7 +24,7 @@ S_0x800942300 .scope module, "DUT" "sipo" 2 9, 3 1 0, S_0x800942180;
     .port_info 3 /INPUT 1 "rst"
     .port_info 4 /INPUT 1 "oe"
     .port_info 5 /INPUT 1 "ie"
-P_0x800955840 .param/l "WIDTH" 0 3 2, +C4<00000000000000000000000000001000>;
+P_0x800955640 .param/l "WIDTH" 0 3 2, +C4<00000000000000000000000000001000>;
 o0x8009708c8 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
 ; Elide local net with no drivers, v0x800947500_0 name=_s0
 v0x800947140_0 .net "clk", 0 0, v0x800948220_0;  1 drivers
@@ -34,7 +34,7 @@ v0x800947a00_0 .net "oe", 0 0, v0x800948400_0;  1 drivers
 v0x800947aa0_0 .var "out", 7 0;
 v0x800947b40_0 .net "q", 7 0, L_0x8009485e0;  1 drivers
 v0x800947be0_0 .net "rst", 0 0, v0x800948540_0;  1 drivers
-E_0x800925bb0 .event posedge, v0x800947140_0;
+E_0x800925b20 .event posedge, v0x800947140_0;
 L_0x8009485e0 .functor MUXZ 8, o0x8009708c8, v0x800947aa0_0, v0x800948400_0, C4<>;
 S_0x800942480 .scope module, "DUT1" "sipo" 2 17, 3 1 0, S_0x800942180;
  .timescale 0 0;
@@ -44,7 +44,7 @@ S_0x800942480 .scope module, "DUT1" "sipo" 2 17, 3 1 0, S_0x800942180;
     .port_info 3 /INPUT 1 "rst"
     .port_info 4 /INPUT 1 "oe"
     .port_info 5 /INPUT 1 "ie"
-P_0x800955900 .param/l "WIDTH" 0 3 2, +C4<00000000000000000000000000001000>;
+P_0x800955700 .param/l "WIDTH" 0 3 2, +C4<00000000000000000000000000001000>;
 o0x800970b68 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
 ; Elide local net with no drivers, v0x800947d20_0 name=_s0
 v0x800947dc0_0 .net "clk", 0 0, v0x800948220_0;  alias, 1 drivers
@@ -57,7 +57,7 @@ v0x800948180_0 .net "rst", 0 0, v0x800948540_0;  alias, 1 drivers
 L_0x800948680 .functor MUXZ 8, o0x800970b68, v0x800948040_0, v0x800948400_0, C4<>;
     .scope S_0x800942300;
 T_0 ;
-    %wait E_0x800925bb0;
+    %wait E_0x800925b20;
     %load/vec4 v0x800947460_0;
     %flag_set/vec4 8;
     %jmp/0xz  T_0.0, 8;
@@ -70,22 +70,16 @@ T_0 ;
 T_0.2 ;
     %load/vec4 v0x800947aa0_0;
     %parti/s 7, 0, 2;
-    %ix/load 4, 1, 0;
-    %ix/load 5, 0, 0;
-    %flag_set/imm 4, 0;
-    %assign/vec4/off/d v0x800947aa0_0, 4, 5;
     %load/vec4 v0x8009478c0_0;
-    %ix/load 4, 0, 0;
-    %ix/load 5, 0, 0;
-    %flag_set/imm 4, 0;
-    %assign/vec4/off/d v0x800947aa0_0, 4, 5;
+    %concat/vec4; draw_concat_vec4
+    %assign/vec4 v0x800947aa0_0, 0;
 T_0.3 ;
 T_0.0 ;
     %jmp T_0;
     .thread T_0;
     .scope S_0x800942480;
 T_1 ;
-    %wait E_0x800925bb0;
+    %wait E_0x800925b20;
     %load/vec4 v0x800947f00_0;
     %flag_set/vec4 8;
     %jmp/0xz  T_1.0, 8;
@@ -98,15 +92,9 @@ T_1 ;
 T_1.2 ;
     %load/vec4 v0x800948040_0;
     %parti/s 7, 0, 2;
-    %ix/load 4, 1, 0;
-    %ix/load 5, 0, 0;
-    %flag_set/imm 4, 0;
-    %assign/vec4/off/d v0x800948040_0, 4, 5;
     %load/vec4 v0x800947e60_0;
-    %ix/load 4, 0, 0;
-    %ix/load 5, 0, 0;
-    %flag_set/imm 4, 0;
-    %assign/vec4/off/d v0x800948040_0, 4, 5;
+    %concat/vec4; draw_concat_vec4
+    %assign/vec4 v0x800948040_0, 0;
 T_1.3 ;
 T_1.0 ;
     %jmp T_1;
@@ -125,7 +113,7 @@ T_3 ;
     %vpi_call 2 29 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x800942180 {0 0 0};
     %pushi/vec4 1, 0, 1;
     %store/vec4 v0x800948360_0, 0, 1;
-    %pushi/vec4 0, 0, 1;
+    %pushi/vec4 1, 0, 1;
     %store/vec4 v0x800948400_0, 0, 1;
     %pushi/vec4 0, 0, 1;
     %store/vec4 v0x800948540_0, 0, 1;
