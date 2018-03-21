@@ -26,7 +26,7 @@ module pwm (clk, rst, in, out);
 	counter <= 1'b0;
       else begin
 	 counter <= counter + 1'b1;
-	 if (in[WIDTH-1:0] >= counter[WIDTH-1:0])
+	 if (in > counter)
 	   out <= 1'b1;
 	 else
 	   out <= 1'b0;

@@ -33,13 +33,11 @@ module pwm_tb();
       rst = 1;
       #10
 	rst = 0;
-      #5
-	in = 4'b1111;
       #50000
 	$finish;
       
    end
 
    always #5 clk = ~clk;
-   always #100 in = in + 1;
+   always #1000 in = in + 1;
 endmodule // pwm_tb
