@@ -13,8 +13,7 @@ module sipo (clk, d, q, rst, oe, ie);
 	 if(rst)
 	   out <= 0;
 	 else begin
-	    out[WIDTH-1:1] <= out[WIDTH-2:0];
-	    out[0] <= d;
+	    out[WIDTH-1:0] <= {out[WIDTH-2:0], d};	    
 	 end
       end
    end
