@@ -13,13 +13,13 @@
    See the License for the specific language governing permissions and limitations under the License.
 */
 
-module ln4017 (cp0, cp1, mr, out_q, q59_b);
+module ln4017 (cp0, cp1, mr, out_q, q59_n);
    input cp0;
    input cp1;
    input mr;
    output [9:0] out_q;
    reg [9:0] 	    out_d;
-   output 	    q59_b;
+   output 	    q59_n;
    
    always @ (posedge mr)
      out_d <= 10'b1;
@@ -38,6 +38,6 @@ module ln4017 (cp0, cp1, mr, out_q, q59_b);
      end
    end	 
 
-   assign q59_b = ~|out_d[9:5];
+   assign q59_n = ~|out_d[9:5];
    assign out_q = out_d;
 endmodule // 4017

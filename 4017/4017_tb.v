@@ -18,14 +18,14 @@ module ln4017_tb ();
    reg cp1;
    reg mr;
    wire [9:0] out;
-   wire	     q59_b;
+   wire	     q59_n;
 
    ln4017 DUT(
 	      .cp0(cp0),
 	      .cp1(cp1),
 	      .mr(mr),
 	      .out_q(out),
-	      .q59_b(q59_b)
+	      .q59_n(q59_n)
 	      );
 
    initial begin
