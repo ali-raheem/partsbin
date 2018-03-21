@@ -18,19 +18,18 @@ module pwm (clk, rst, in, out);
    input clk;
    input rst;
    input [WIDTH-1:0] in;
-   output reg 	     out;
+   output 	     out;
    reg [WIDTH-1:0]   counter;
-
+   reg [WIDTH-1:0]   in_d;
+   
    always @ (posedge clk) begin
+      in_d <= in;
       if (rst)
 	counter <= 1'b0;
-      else begin
+      else
 	 counter <= counter + 1'b1;
-	 if (in > counter)
-	   out <= 1'b1;
-	 else
-	   out <= 1'b0;
-      end
    end
+   
+   assign out = (in_d[WIDTH-1:0] > counter[WIDTH-1:0]);
    
 endmodule // pwm

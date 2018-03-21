@@ -13,13 +13,15 @@
    See the License for the specific language governing permissions and limitations under the License.
 */
 
+`timescale 1ns / 1ps
 module pwm_tb();
+   localparam WIDTH = 8;
    reg clk;
    reg rst;
-   reg [3:0] in;
+   reg [WIDTH-1:0] in;
    wire      out;
 
-   pwm #(.WIDTH(4)) DUT(
+   pwm #(.WIDTH(WIDTH)) DUT(
 			.clk(clk),
 			.rst(rst),
 			.in(in),
@@ -38,6 +40,6 @@ module pwm_tb();
       
    end
 
-   always #5 clk = ~clk;
+   always #1 clk = ~clk;
    always #1000 in = in + 1;
 endmodule // pwm_tb
