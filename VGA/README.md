@@ -35,3 +35,11 @@ In lines
 ![Waveform showing a vertical sync spanning two lines](waveform.png)
 
 Output looks good, the code was working with my TV before I cleaned it up but I have made some changes since a actual test.
+
+### Usage
+
+```
+$ iverilog -Wall -o vga vga.v vga_tb.v
+$ vvp vga
+% gtkwave vga.vcd &
+```
