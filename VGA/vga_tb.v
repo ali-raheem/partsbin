@@ -1,5 +1,5 @@
 /*
-   Copyright 2018 Ali Raheem <ali.raheem@gmail.com>
+1;5002;0c   Copyright 2018 Ali Raheem <ali.raheem@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
    See the License for the specific language governing permissions and limitations under the License.
 */
 
+`timescale 10ns/1ns
 module vga_tb ();
    reg clk;
    reg rst;
