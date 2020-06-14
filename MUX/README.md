@@ -1,8 +1,9 @@
 # MUX
 
-Simple continuous assignment mux
+Simple continuous assignment mux, parameterized for bus width
 
-* A bus
-* B bus
+* A bus in
+* B bus in
 * Switch
+* Q bus out
 
