@@ -49,6 +49,7 @@ Connections to VRAM chips
 		     |  `-------------->| MCU |
 		     |       switch     |     |
 		     `----------------->|_____|
+```
 
 ## Synthesis
 
