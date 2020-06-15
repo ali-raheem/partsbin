@@ -49,20 +49,27 @@ module memmux_tb();
       $dumpfile("MEMMUX.vcd");
       $dumpvars(0, DUT);
       switch = 0;
+      mADDR_M = 0;
+      mDATA_M = 0;
+      mADDR_V = 0;
+      oDATA_A = 0;
+      oDATA_B = 0;
+      #1
       mADDR_M = {ADDR_WIDTH{1'b1}};
       mDATA_M = {DATA_WIDTH/4{4'b1010}};
       mADDR_V = {ADDR_WIDTH/2{2'b10}};
       oDATA_A = {DATA_WIDTH/2{2'b10}};
       oDATA_B = {DATA_WIDTH/2{2'b01}};
-      #3
+      #10
         switch = 1;
         oDATA_B = {DATA_WIDTH/2{2'b10}};
         oDATA_A = {DATA_WIDTH/2{2'b01}};
-      #3
+      #10
 	mADDR_M = 0;
       mADDR_V = 0;
-      #3
+      #10
 	switch = 0;
+      #10
       $finish;   
    end // initial begin   
 
@@ -71,5 +78,6 @@ module memmux_tb();
 
    always #1 mADDR_M = mADDR_M + 1;
    always #1 mADDR_V = mADDR_V + 1;
-   
+   always #2 switch = !switch;
+
 endmodule // memmux_tb
