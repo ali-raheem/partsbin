@@ -32,7 +32,8 @@ In lines
 
 ### Simulation output
 
-![Waveform showing a vertical sync spanning two lines](waveform.png)
+![Zoom in on waveform](waveform_zoom.png)
+![Entire frame](waveform.png)
 
 Output looks good, the code was working with my TV before I cleaned it up but I have made some changes since a actual test.
 
