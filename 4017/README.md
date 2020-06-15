@@ -8,3 +8,4 @@ Then venerable one-hot decade counter.
 * q59_b - Active low carry
 * out_q - Active high output
 
+![Waveform of simulation](waveform.png)
