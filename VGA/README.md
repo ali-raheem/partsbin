@@ -43,3 +43,20 @@ $ iverilog -Wall -o vga vga.v vga_tb.v
 $ vvp vga
 % gtkwave vga.vcd &
 ```
+
+### Synthesis
+
+| Yosys output                |     |
+|-----------------------------|-----|
+| Number of wires:            | 62  |
+| Number of wire bits:        | 155 |
+| Number of public wires:     | 7   |
+| Number of public wire bits: | 24  |
+| Number of memories:         | 0   |
+| Number of memory bits:      | 0   |
+| Number of processes:        | 0   |
+| Number of cells:            | 114 |
+| SB_CARRY                    | 44  |
+| SB_DFFESR                   | 10  |
+| SB_DFFSR                    | 9   |
+| SB_LUT4                     | 51  |
