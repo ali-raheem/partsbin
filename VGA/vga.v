@@ -20,7 +20,7 @@ module vga (clk, rst, hs, vs, draw, x, y);
    output hs;
    output wire draw;
    output reg [9:0] x;
-   output reg [8:0] y;
+   output reg [9:0] y;
 
    always @ (posedge clk) begin
       if (rst) begin
