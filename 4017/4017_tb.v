@@ -29,12 +29,12 @@ module ln4017_tb ();
 	      );
 
    initial begin
-      $dumpfile("4017_test.vcd");
+      $dumpfile("4017.vcd");
       $dumpvars(0, ln4017_tb);
       mr = 1;
       cp0 = 0;
       cp1 = 0;
-      #10
+      #15
 	mr = 0;
       #1000
 	cp1 = 1;

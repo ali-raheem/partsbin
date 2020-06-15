@@ -25,14 +25,14 @@ module ln4017 (cp0, cp1, mr, out_q, q59_n);
      out_d <= 10'b1;
 
    always @ (posedge cp0) begin
-     if (~cp1) begin
+     if (!cp1 & !mr) begin
 	out_d[9:1] <= out_d[8:0];
 	out_d[0] <= out_d[9];
      end
    end
 
-   always@(negedge cp0) begin
-      if (cp1) begin
+   always @ (negedge cp0) begin
+      if (cp1 & !mr) begin
 	out_d[9:1] <= out_d[8:0];
 	out_d[0] <= out_d[9];
      end
