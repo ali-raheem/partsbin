@@ -25,7 +25,7 @@ module pwm (clk, rst, in, out);
    always @ (posedge clk) begin
       in_d <= in;
       if (rst)
-	counter <= 1'b0;
+	counter <= {WIDTH{1'b0}};
       else
 	 counter <= counter + 1'b1;
    end
