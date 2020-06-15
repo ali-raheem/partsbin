@@ -1,6 +1,6 @@
 # MEMMUX
 
-Multiplexer for dual VRAM setups. Read from one VRAM while writing to another. I have not yet tested this on hardware.
+Multiplexer for dual VRAM setups. Read from one VRAM while writing to another. I have not yet tested this on hardware. Should work with any two memory blocks. You need to manage OE/WR etc. yourself.
 
 ![Testbench waveform](waveform.png)
 
@@ -31,7 +31,7 @@ Connections to VRAM chips
 
 
 ## Layout
-
+```
                       mDATA_V   ________
                      ,-------->|        |
                      |mADDR_V  | VIDEO  |
@@ -48,7 +48,7 @@ Connections to VRAM chips
 		   |        |
 		   |  MCU   |
 		   |________|
-
+```
 
 ## Synthesis
 
