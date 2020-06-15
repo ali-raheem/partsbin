@@ -15,10 +15,10 @@ Uses master/slave terminology, with master chips being the ones supplying the ad
 Connections to MCU/Video device, M connections to upstream MCU, V connects to downstream video device
 
 * mADDR_M - input address bus
-* mDATA_M - output data bus
+* mDATA_M - input data bus
 * switch  - Flips the VRAM should be during Vblank for glitchless
 * mADDR_V - input address bus
-* mDATA_V - input data bus
+* mDATA_V - output data bus
 
 ### Slave
 
@@ -32,11 +32,12 @@ Connections to VRAM chips
 
 ## Layout
 ```
-                        mDATA_V   ________
-                     ,---------->|        |
-                     |  mADDR_V  | VIDEO  |
-                     |  ,------->|________|
-		     |  |
+                                        ________
+                              mDATA_V  |        |
+                     ,---------------->| VIDEO  |
+                     |        mADDR_V  | DRIVER |
+                     |  ,--------------|        |
+		     |  |              |________|
  ________           _|__v___            ________
 |        | sADDR_A |        | sADDR_B  |        |
 | VRAM A |<--------| MEMMUX |--------->| VRAM B |
@@ -44,11 +45,11 @@ Connections to VRAM chips
 |________|<------->|________|<-------->|________|
                      ^  ^ ^
 	             |  | |  mDATA_M     _____
-                     |  | `------------>|     |
+                     |  | `-------------|     |
 		     |  |    mADDR_M    |     |
-		     |  `-------------->| MCU |
+		     |  `---------------| MCU |
 		     |       switch     |     |
-		     `----------------->|_____|
+		     `------------------|_____|
 ```
 
 ## Synthesis
