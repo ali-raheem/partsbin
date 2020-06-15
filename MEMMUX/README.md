@@ -1,6 +1,6 @@
 # MEMMUX
 
-Multiplexer for dual VRAM setups. Read from one VRAM while writing to another. I have not yet tested this on hardware. Should work with any two memory blocks. You need to manage OE/WR etc. yourself.
+Multiplexer for dual VRAM setups. Read from one VRAM while writing to another. I have not yet tested this on hardware. Should work with any two memory blocks. You need to manage OE/WR and CS signals as needed yourself since it'll be a simple matter of connecting `switch`. It wouldn't be hard to add but would clutter the module.
 
 ![Testbench waveform](waveform.png)
 
