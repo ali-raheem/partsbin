@@ -37,7 +37,7 @@ Connections to VRAM chips
                      |mADDR_V  | VIDEO  |
                      |  ,----->|________|
 		     |  |
- ________           _|__v__            ________
+ ________           _|__v___            ________
 |        | sADDR_A |        | sADDR_B  |        |
 | VRAM A |<--------| MEMMUX |--------->| VRAM B |
 |        | sDATA_A |        | sDATA_B  |        |
