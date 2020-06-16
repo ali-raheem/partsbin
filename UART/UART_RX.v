@@ -26,11 +26,12 @@ module UART_RX (clk, rst, rx, data, data_ready);
    
    output [BITS - 1:0] data;
    output reg 	       data_ready;
- 	       
-   reg [$bits(BITS) - 1:0] bitsread;
-   reg [BITS - 1:0]    outputbuffer;    
-   reg [BITS - 1:0]    readbuffer;
-   reg [2 * BITLEN - 1:0] 	       counter;
+   
+   reg [$clog2(BITS + 1) - 1:0] bitsread;
+   reg [BITS - 1:0] 		outputbuffer;    
+   reg [BITS - 1:0] 		readbuffer;
+   reg [$clog2(BITLEN + 1) - 1:0] counter;
+   
    reg [NUM_STATES - 1:0] STATE;
    
    always @ (posedge clk) begin
@@ -64,8 +65,8 @@ module UART_RX (clk, rst, rx, data, data_ready);
 	   STATE_READING: begin
 	      counter <= counter + 1;
 	      if (counter == BITLEN) begin
-		 readbuffer[BITS - 1: 1]  <= readbuffer[BITS - 2:0];
-		 readbuffer[0] <= rx;
+		 readbuffer[BITS - 2:0]  <= readbuffer[BITS - 1:1];
+		 readbuffer[BITS - 1] <= rx;
 		 counter <= 0;
 		 bitsread <= bitsread + 1;
 		 if (bitsread == BITS - 1) begin
@@ -78,6 +79,9 @@ module UART_RX (clk, rst, rx, data, data_ready);
 	      counter <= counter + 1;
 	      if (counter == BITLEN) begin
 		 STATE <= STATE_WAIT;
+		 counter <= 0;
+		 bitsread <= 0;
+		 readbuffer <= 0;
 		 if (rx) begin
 		    outputbuffer <= readbuffer;
 		    data_ready <= 1;

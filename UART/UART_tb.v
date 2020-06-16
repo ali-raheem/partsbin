@@ -15,7 +15,8 @@
 
 module UART_tb();
    localparam BITS = 8;
-   localparam DUMMYDATA = 8'b01010101;
+   localparam DUMMYDATA_A = 8'b01010101;
+   localparam DUMMYDATA_B = 8'b11001100;
    
    reg clk;
    reg rst;
@@ -56,14 +57,19 @@ module UART_tb();
       $dumpvars(0, RX);
       clk = 0;
       rst = 1;
-      txdata = DUMMYDATA;
+      txdata = DUMMYDATA_A;
       #2
 	rst = 0;
       #8
 	data_ready = 1;
       #16
 	data_ready = 0;
-      #2000
+      #400
+	txdata = DUMMYDATA_B;
+        data_ready = 1;
+      #16
+	data_ready = 0;
+      #400
       $finish;   
    end // initial begin   
 

@@ -31,9 +31,10 @@ module UART_TX(clk, rst, data, data_ready, data_sent, tx);
    output reg	      tx;
 
    reg [BITS - 1:0]   send_data;
-   reg [NUM_STATES - 1:0] STATE;
-   reg [$clog2(BITS + 1) - 1:0]        bits_sent;   
-   reg [$clog2(BITLEN + 1) - 1:0] 	  counter;
+   reg [$bits(NUM_STATES ) - 1:0]  STATE;
+   reg [$bits(BITS) - 1:0] 	  bits_sent;
+
+   reg [5:0] 			  counter;
    
    always @ (posedge clk) begin
       if (rst) begin
