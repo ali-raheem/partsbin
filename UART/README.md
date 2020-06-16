@@ -2,7 +2,7 @@
 
 Made up of Reciever (RX) and Transmitter (TX) modules, parameterized bitlength.
 
-Needs a clk signal at x16 the baudrate.
+The module supersamples the RX/TX line at x16 times the clk signal (so for 9600 baud you'd need 16x9600Hz clock).
 
 ![Simulation of RX wired to TX passing data over UART](waveform.png)
 
@@ -39,6 +39,12 @@ Needs a clk signal at x16 the baudrate.
 * Output	[BITS-1:0] data
 * Output	data_ready on recieving entire character
 
+### Usage
+
+A clock signal should be provided that is 16 times the baud rate, so for 9600 baud you'd need a clock at 153.6KHz. rst is a synchronous reset. Data is serially shifted in via RX LSB first. Once `BITS` bits are shifted in data_ready is pulled high by the module, until another START condition is detected. It is suitable to be used as in interrupt.
+
+The module avoids spurious START conditions by sampling it 8 times ensuring it stays LOW before begining recieve, and the same for STOP before considering data is valid.
+
 ### Simulation
 
 ![UART_RX recieving data](waveform_UART_RX.png)
@@ -54,6 +60,15 @@ Needs a clk signal at x16 the baudrate.
 * Output tx 	Connected to RX
 * Output data_sent	  Entire character has been sent
 
+### Usage
+
+A clock signal should be provided that is 16 times the baud rate, so for 9600 baud you'd need a clock at 153.6KHz. rst is a synchronous reset. Data is provided in parallel on the data bus, then data_ready is asserted. On the next positive edge of clk it is latched in. Data is pushed LSB first out via TX. Once `BITS` bits are transmitted data_sent will be pulled high by the module until data_ready is pulled up by you. data_sent is suitable to be used as an interrupt.
+
 ### Simulation
 
 ![UART_TX sending data](waveform_UART_TX.png)
+
+## TODO
+
+* Add parity support
+* Error signal 
