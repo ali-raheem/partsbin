@@ -88,5 +88,5 @@ module EM4100(
    assign CP1 = data[1] ^ data[5] ^ data[9] ^ data[13] ^ data[17] ^ data[21] ^ data[25] ^ data[29] ^ data[33] ^ data[37];
    assign CP2 = data[2] ^ data[6] ^ data[10] ^ data[14] ^ data[18] ^ data[22] ^ data[26] ^ data[30] ^ data[34] ^ data[38];
    assign CP3 = data[3] ^ data[7] ^ data[11] ^ data[15] ^ data[19] ^ data[23] ^ data[27] ^ data[31] ^ data[35] ^ data[39];
-   assign q = (tx & sending) ? out ^ clk : 1'bZ;
+   assign q = (tx & sending) ? out ^ !clk : 1'bZ;
 endmodule // em4100
