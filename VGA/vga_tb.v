@@ -1,5 +1,5 @@
 /*
-1;5002;0c   Copyright 2018 Ali Raheem <ali.raheem@gmail.com>
+   Copyright 2018, 2020 Ali Raheem <ali.raheem@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -41,10 +41,10 @@ module vga_tb ();
       rst = 1;
       #4
 	rst = 0;
-      #2000000
+      #200000000
 	$finish;
    end
-   always #2
+   always #4
      clk = ~clk;
 
 endmodule // vga_tb

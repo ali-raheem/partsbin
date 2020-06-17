@@ -14,23 +14,26 @@
 */
 
 module vga (clk, rst, hs, vs, draw, x, y);
+   localparam width = 800;
+   localparam height = 525;
+   
    input clk;
    input rst;
    output vs;
    output hs;
    output wire draw;
-   output reg [9:0] x;
-   output reg [9:0] y;
+   output reg [$clog2(width + 1) - 1:0] x;
+   output reg [$clog2(height + 1) - 1:0] y;
 
-   always @ (posedge clk) begin
+   always @ (posedge clk, posedge rst) begin
       if (rst) begin
 	 x <= 0;
 	 y <= 0;
       end
       else begin
-	 if (x == 799) begin
+	 if (x == width - 1) begin
 	    x <= 0;
-	    if (y == 524)
+	    if (y == height - 1)
 	      y <= 0;
 	    else
 	      y <= y + 1;
@@ -42,7 +45,7 @@ module vga (clk, rst, hs, vs, draw, x, y);
 
    assign draw = (x < 640) && (y < 480);
    assign hs = ~((x >= 656) && (x < 752));
-   assign vs = ~((y >= 490) && (y < 492)); 
+   assign vs = ~((y == 490) || (y == 491)); 
 endmodule // vgs
 
  
