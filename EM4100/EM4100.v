@@ -30,20 +30,20 @@ module EM4100(
 	 txdata[9] <= ^data[7:4];
 	 txdata[13:10] <= data[11:8];
 	 txdata[14] <= ^data[11:8];
-	 txdata[18:15] <= data[14:11];
-	 txdata[19] <= ^data[14:11];
-	 txdata[23:20] <= data[18:15];
-	 txdata[24] <= ^data[18:15];
-	 txdata[28:25] <= data[21:18];
-	 txdata[29] <= ^data[21:18];
-	 txdata[33:30] <= data[24:21];
-	 txdata[34] <= ^data[24:21];
-	 txdata[38:35] <= data[27:24];
-	 txdata[39] <= ^data[27:24];
-	 txdata[43:40] <= data[31:28];
-	 txdata[44] <= ^data[31:28];
-	 txdata[48:45] <= data[35:32];
-	 txdata[49] <= ^data[35:32];
+	 txdata[18:15] <= data[15:12];
+	 txdata[19] <= ^data[15:12];
+	 txdata[23:20] <= data[19:16];
+	 txdata[24] <= ^data[19:16];
+	 txdata[28:25] <= data[23:20];
+	 txdata[29] <= ^data[23:20];
+	 txdata[33:30] <= data[27:24];
+	 txdata[34] <= ^data[27:24];
+	 txdata[38:35] <= data[31:28];
+	 txdata[39] <= ^data[31:28];
+	 txdata[43:40] <= data[35:32];
+	 txdata[44] <= ^data[35:32];
+	 txdata[48:45] <= data[39:36];
+	 txdata[49] <= ^data[39:36];
 	 txdata[50] <= CP0;
 	 txdata[51] <= CP1;
 	 txdata[52] <= CP2;
@@ -55,21 +55,21 @@ module EM4100(
 	    STATE_HEAD: begin
 	       sending <= 1;
 	       out <= 1;
-	       if (counter == 9) begin
+	       if (counter == 8) begin
 		  counter <= 0;
 		  STATE <= STATE_DATA;
 	       end
 	    end
 	   STATE_DATA: begin
-	      if (counter == 40) begin
+	      out <= txdata[counter];
+	      if (counter == 53) begin
 		 counter <= 0;
 		 STATE <= STATE_STOP;
 	      end
-	      out <= txdata[counter];
 	   end
 	   STATE_STOP: begin
 	      out <= 0;
-	      if (counter == 2) begin
+	      if (counter == 1) begin
 		 counter <= 0;
 		 STATE <= STATE_PAUSE;
 	      end
