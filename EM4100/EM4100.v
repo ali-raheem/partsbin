@@ -12,7 +12,7 @@ module EM4100(
    localparam STATE_PAUSE = 8;
    reg [8 - 1:0] STATE;
 
-   reg [$clog2(80 + 1) - 1: 0] counter;
+   reg [$clog2(54 + 1) - 1: 0] counter;
    
    wire 	  CP0, CP1, CP2, CP3;
    reg 			     out;
@@ -55,17 +55,17 @@ module EM4100(
 	    STATE_HEAD: begin
 	       sending <= 1;
 	       out <= 1;
-	       if (counter == 18) begin
+	       if (counter == 9) begin
 		  counter <= 0;
 		  STATE <= STATE_DATA;
 	       end
 	    end
 	   STATE_DATA: begin
-	      if (counter == 40 * 2) begin
+	      if (counter == 40) begin
 		 counter <= 0;
 		 STATE <= STATE_STOP;
 	      end
-	      out <= txdata[counter/2];
+	      out <= txdata[counter];
 	   end
 	   STATE_STOP: begin
 	      out <= 0;
@@ -75,7 +75,8 @@ module EM4100(
 	      end
 	   end
 	   STATE_PAUSE: begin
-	      if (counter == 16) begin
+	      sending <= 0;
+	      if (counter == 8) begin
 		 counter <= 0;
 		 STATE <= STATE_HEAD;
 	      end
@@ -88,5 +89,5 @@ module EM4100(
    assign CP1 = data[1] ^ data[5] ^ data[9] ^ data[13] ^ data[17] ^ data[21] ^ data[25] ^ data[29] ^ data[33] ^ data[37];
    assign CP2 = data[2] ^ data[6] ^ data[10] ^ data[14] ^ data[18] ^ data[22] ^ data[26] ^ data[30] ^ data[34] ^ data[38];
    assign CP3 = data[3] ^ data[7] ^ data[11] ^ data[15] ^ data[19] ^ data[23] ^ data[27] ^ data[31] ^ data[35] ^ data[39];
-   assign q = (tx & sending) ? out ^ !clk : 1'bZ;
+   assign q = (tx & sending) ? out ^ clk : 1'bZ;
 endmodule // em4100
