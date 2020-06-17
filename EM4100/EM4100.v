@@ -5,7 +5,6 @@ module EM4100(
 	      output q
 	      );
    
-   reg [53:0] 	     txdata;
    localparam STATE_HEAD = 1;
    localparam STATE_DATA = 2;
    localparam STATE_STOP = 4;
@@ -17,6 +16,7 @@ module EM4100(
    wire 	  CP0, CP1, CP2, CP3;
    reg 			     out;
    reg 			     sending;
+   reg [53:0] 		     txdata;
    
    always @ (posedge clk) begin
       if (!tx) begin
