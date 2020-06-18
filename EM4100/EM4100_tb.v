@@ -15,7 +15,7 @@ module EM4100_tb();
       $dumpvars(0, DUT);
       clk = 0;
       tx = 0;
-      data = 40'hDEADBEEF;
+      data = {{20{1'b1}}, {20{1'b0}}};
       #4
       tx = 1;
       #1000
