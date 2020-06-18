@@ -17,3 +17,27 @@ $ gtkwave *.vcd
 ### License
 
 Released under Apache 2.0, I am doing my best to add invidual notices to each file but otherwise you may assume Apache 2.0 applies to all files in this repository.
+
+### Parts
+
+```
+partsbin
+├── 4017		Onehot decade counter
+├── 7SEG		7segment display driver
+├── COUNTER
+├── digital_comparitor
+├── EM4100		RFID modulator (manchest encoding) 125Khz
+├── HC1645		
+├── LFSR		Linear Feedback Shift Register
+├── MEMMUX		Multibus MUX (for VRAM flipping)
+├── MUX			Multiplexer
+├── PIPO
+├── PISO
+├── PLCOUNTER
+├── PWM			Pulse width modulator
+├── SIPO
+├── UART		Universe Asynchronous Reciever/Transmitter
+└── VGA			VGA graphics driver
+
+16 directories
+```
