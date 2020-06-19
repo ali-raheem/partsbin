@@ -122,4 +122,5 @@ Generated with `yosys -p "ice40_synth"`
 ```
 ## TODO
 
-* Error signal  (frame error etc).
+* Error signal  (frame and parity from RX module).
+* Parametize "BITLEN" i.e. duration of bit in clock cycles
