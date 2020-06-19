@@ -61,7 +61,7 @@ module UART_RX (clk, rst, rx, data, data_ready);
 		 STATE <= STATE_READING;
 		 counter <= 0;
 	      end
-	      else if (rx) 
+	      else if (rx) // Spurious pulse
 		STATE <= STATE_WAIT;
 	   end
 	   
@@ -85,7 +85,7 @@ module UART_RX (clk, rst, rx, data, data_ready);
 		    STATE <= STATE_STOP;
 		    counter <= 0;
 		 end
-		 else 
+		 else // Parity Fail
 		   STATE <= STATE_WAIT;
 	      end
 	   end
@@ -96,7 +96,7 @@ module UART_RX (clk, rst, rx, data, data_ready);
 		 counter <= 0;
 		 bitsread <= 0;
 		 readbuffer <= 0;
-		 if (rx) begin
+		 if (rx) begin // STOPBIT pass
 		    outputbuffer <= readbuffer;
 		    data_ready <= 1;
 		 end
