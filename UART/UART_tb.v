@@ -14,7 +14,10 @@
 */
 
 module UART_tb();
-   localparam BITS = 8;
+   // 8E1
+   localparam BITS = 8; // 8 bits
+   localparam STOPBITS = 1; // One Stop bit
+   localparam PARITY = 2; // Even parity
    localparam DUMMYDATA_A = 8'b01010101;
    localparam DUMMYDATA_B = 8'b11001100;
    
@@ -30,7 +33,9 @@ module UART_tb();
    reg [BITS - 1:0] txdata;
    wire [BITS - 1:0] rxdata;
    
-   UART_TX #(.BITS(BITS))
+   UART_TX #(.BITS(BITS),
+	     .STOPBITS(STOPBITS),
+	     .PARITY(PARITY))
    TX(
       .clk(clk),
       .rst(rst),
@@ -40,7 +45,9 @@ module UART_tb();
       .data_sent(data_sent)
       );
 
-   UART_RX #(.BITS(BITS))
+   UART_RX #(.BITS(BITS),
+	     .STOPBITS(STOPBITS),
+	     .PARITY(PARITY))
    RX(
       .clk(clk),
       .rst(rst),

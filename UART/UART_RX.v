@@ -12,13 +12,16 @@
 
 module UART_RX (clk, rst, rx, data, data_ready);
    parameter BITS = 8;
+   parameter STOPBITS = 1;
+   parameter PARITY = 0;
    
    localparam BITLEN = 16;
-   localparam NUM_STATES = 4; 
+   localparam NUM_STATES = 5; 
    localparam STATE_WAIT = 1;
    localparam STATE_START = 2;
    localparam STATE_READING = 4;
-   localparam STATE_STOP = 8;
+   localparam STATE_PARITY = 8;
+   localparam STATE_STOP = 16;
 			  
    input clk;
    input rx;
@@ -30,7 +33,7 @@ module UART_RX (clk, rst, rx, data, data_ready);
    reg [$clog2(BITS + 1) - 1:0] bitsread;
    reg [BITS - 1:0] 		outputbuffer;    
    reg [BITS - 1:0] 		readbuffer;
-   reg [$clog2(BITLEN + 1) - 1:0] counter;
+   reg [$clog2(BITLEN * STOPBITS + 1) - 1:0] counter;
    
    reg [NUM_STATES - 1:0] STATE;
    
@@ -70,14 +73,25 @@ module UART_RX (clk, rst, rx, data, data_ready);
 		 counter <= 0;
 		 bitsread <= bitsread + 1;
 		 if (bitsread == BITS - 1) begin
-		    STATE <= STATE_STOP;
+		    STATE <= (PARITY == 0)? STATE_STOP : STATE_PARITY;
 		    counter <= 0;
 		 end
 	      end
 	   end // case: STATE_READING
-	   STATE_STOP: begin
+	   STATE_PARITY: begin
 	      counter <= counter + 1;
 	      if (counter == BITLEN) begin
+		 if (rx == ((PARITY == 1)? ~^readbuffer : ^readbuffer)) begin
+		    STATE <= STATE_STOP;
+		    counter <= 0;
+		 end
+		 else 
+		   STATE <= STATE_WAIT;
+	      end
+	   end
+	   STATE_STOP: begin
+	      counter <= counter + 1;
+	      if (counter == BITLEN * STOPBITS) begin
 		 STATE <= STATE_WAIT;
 		 counter <= 0;
 		 bitsread <= 0;

@@ -15,6 +15,8 @@
 
 module UART_TX_tb();
    localparam BITS = 8;
+   localparam STOPBITS = 1;
+   localparam PARITY = 2;
 
    reg clk;
    reg rst;
@@ -23,9 +25,9 @@ module UART_TX_tb();
    wire rx;
    wire data_sent;
    
-   reg [BITS - 1:0] data = 8'b01011100;
+   reg [BITS - 1:0] data = 8'b01010111;
    
-   UART_TX #(.BITS(BITS))
+   UART_TX #(.BITS(BITS), .STOPBITS(STOPBITS), .PARITY(PARITY))
    DUT(
        .clk(clk),
        .rst(rst),
@@ -46,6 +48,8 @@ module UART_TX_tb();
 	rst = 0;
       #1
 	data_ready = 1;
+      #3
+	data_ready = 0;
       #2000
       $finish;   
    end // initial begin   

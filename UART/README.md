@@ -9,7 +9,7 @@ The module supersamples the RX/TX line at x16 times the clk signal (so for 9600 
 ## Files
 
 ```
-.
+UART
 ├── README.md			This file
 ├── UART			iverlog binary
 ├── UART_RX			iverilog binary
@@ -45,6 +45,14 @@ A clock signal should be provided that is 16 times the baud rate, so for 9600 ba
 
 The module avoids spurious START conditions by sampling it 8 times ensuring it stays LOW before begining recieve, and the same for STOP before considering data is valid.
 
+#### Parameters
+
+Default is 8N1 mode, 8 bits, no parity and 1 stop.
+
+* BITS Length of data packet (5 - 9, default 8)
+* STOPBIT Length of stop bit (1 - 2, default 1)
+* PARITY Mode of Parity (0-2, default 0, 1 odd, 2 even)
+
 ### Simulation
 
 ![UART_RX recieving data](waveform_UART_RX.png)
@@ -64,11 +72,18 @@ The module avoids spurious START conditions by sampling it 8 times ensuring it s
 
 A clock signal should be provided that is 16 times the baud rate, so for 9600 baud you'd need a clock at 153.6KHz. rst is a synchronous reset. Data is provided in parallel on the data bus, then data_ready is asserted. On the next positive edge of clk it is latched in. Data is pushed LSB first out via TX. Once `BITS` bits are transmitted data_sent will be pulled high by the module until data_ready is pulled up by you. data_sent is suitable to be used as an interrupt.
 
+#### Parameters
+
+Default is 8N1 mode, 8 bits, no parity and 1 stop.
+
+* BITS Length of data packet (5 - 9, default 8)
+* STOPBIT Length of stop bit (1 - 2, default 1)
+* PARITY Mode of Parity (0-2, default 0, 1 odd, 2 even)
+
 ### Simulation
 
 ![UART_TX sending data](waveform_UART_TX.png)
 
 ## TODO
 
-* Add parity support
-* Error signal 
+* Error signal  (frame error etc).

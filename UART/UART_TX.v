@@ -15,15 +15,19 @@
 
 module UART_TX(clk, rst, data, data_ready, data_sent, tx);
    parameter BITS = 8;
-
+   parameter STOPBITS = 1;
+   parameter PARITY = 0;
+   
    localparam BITLEN = 16;
-   localparam NUM_STATES = 4;
+
    localparam STATE_WAIT = 1;
    localparam STATE_START = 2;
    localparam STATE_SEND = 4;
-   localparam STATE_STOP = 8;
-   
-   input clk;
+   localparam STATE_PARITY = 8;
+   localparam STATE_STOP = 16;
+   localparam NUM_STATES = 5;
+
+   input 	      clk;
    input [BITS - 1:0] data;
    input 	      data_ready;
    input 	      rst;
@@ -33,7 +37,7 @@ module UART_TX(clk, rst, data, data_ready, data_sent, tx);
    reg [BITS - 1:0]   send_data;
    reg [NUM_STATES - 1:0] STATE;
    reg [$clog2(BITS + 1) - 1:0]        bits_sent;   
-   reg [$clog2(BITLEN + 1) - 1:0] 	  counter;
+   reg [$clog2(BITLEN * STOPBITS + 1) - 1:0] 	  counter;
    
    always @ (posedge clk) begin
       if (rst) begin
@@ -46,9 +50,9 @@ module UART_TX(clk, rst, data, data_ready, data_sent, tx);
       else begin
 	 case (STATE)
 	   STATE_WAIT: begin
-	     data_sent <= 0;
 	     if (data_ready) begin
 		STATE <= STATE_START;
+		data_sent <= 0;
 		send_data <= data;
 		counter <= 0;
 	     end
@@ -64,24 +68,34 @@ module UART_TX(clk, rst, data, data_ready, data_sent, tx);
 	   end
 	   STATE_SEND: begin
 	      counter <= counter + 1;
-	      tx <= send_data[0];
+	      tx <= send_data[bits_sent];
 	      if (counter == BITLEN) begin
 		 counter <= 0;
 		 bits_sent <= bits_sent + 1;
 		 if (bits_sent == BITS - 1) begin
 		    bits_sent <= 0;
-		    STATE <= STATE_STOP;
+		    STATE <= (PARITY == 0) ? STATE_STOP : STATE_PARITY;
 		 end
-		 else
-		   send_data[BITS - 2:0] <= send_data[BITS - 1: 1];
+//		 else
+//		   send_data[BITS - 2:0] <= send_data[BITS - 1: 1];
 	      end
 	   end // case: STATE_SEND
+	   STATE_PARITY: begin
+	      counter <= counter + 1;
+	      tx <= (PARITY == 1)? ~^send_data : ^send_data;
+	      if (counter == BITLEN) begin
+		 counter <= 0;
+		 STATE <= STATE_STOP;
+	      end
+	   end
 	   STATE_STOP: begin
 	      counter <= counter + 1;
 	      tx <= 1;
-	      data_sent <= 1;
-	      if (counter == BITLEN)
-		STATE <= STATE_WAIT;
+	      if (counter == (BITLEN * STOPBITS)) begin
+		 STATE <= STATE_WAIT;
+		 tx <= 1'bZ;
+		 data_sent <= 1;
+	      end
 	   end
 	 endcase // case (STATE)
       end // else: !if(rst)
