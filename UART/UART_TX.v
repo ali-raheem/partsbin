@@ -1,6 +1,6 @@
 /*
    Copyright 2020 Ali Raheem <ali.raheem@gmail.com>
-
+ 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
@@ -60,7 +60,7 @@ module UART_TX(clk, rst, data, data_ready, data_sent, tx);
 	   STATE_START: begin
 	      tx <= 0;
 	      counter <= counter + 1;
-	      if (counter == BITLEN) begin
+	      if (counter == BITLEN - 1) begin
 		 counter <= 0;
 		 STATE <= STATE_SEND;
 		 bits_sent <= 0;
@@ -69,7 +69,7 @@ module UART_TX(clk, rst, data, data_ready, data_sent, tx);
 	   STATE_SEND: begin
 	      counter <= counter + 1;
 	      tx <= send_data[bits_sent];
-	      if (counter == BITLEN) begin
+	      if (counter == BITLEN - 1) begin
 		 counter <= 0;
 		 bits_sent <= bits_sent + 1;
 		 if (bits_sent == BITS - 1) begin
@@ -83,7 +83,7 @@ module UART_TX(clk, rst, data, data_ready, data_sent, tx);
 	   STATE_PARITY: begin
 	      counter <= counter + 1;
 	      tx <= (PARITY == 1)? ~^send_data : ^send_data;
-	      if (counter == BITLEN) begin
+	      if (counter == BITLEN - 1) begin
 		 counter <= 0;
 		 STATE <= STATE_STOP;
 	      end
@@ -91,7 +91,7 @@ module UART_TX(clk, rst, data, data_ready, data_sent, tx);
 	   STATE_STOP: begin
 	      counter <= counter + 1;
 	      tx <= 1;
-	      if (counter == (BITLEN * STOPBITS)) begin
+	      if (counter == (BITLEN - 1) * STOPBITS) begin
 		 STATE <= STATE_WAIT;
 		 tx <= 1'bZ;
 		 data_sent <= 1;

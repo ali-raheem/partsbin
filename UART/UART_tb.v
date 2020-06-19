@@ -1,5 +1,5 @@
 /*
-   Copyright 2018 Ali Raheem <ali.raheem@gmail.com>
+   Copyright 2020 Ali Raheem <ali.raheem@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ module UART_tb();
       txdata = DUMMYDATA_A;
       #2
 	rst = 0;
-      #8
+      #2
 	data_ready = 1;
       #16
 	data_ready = 0;

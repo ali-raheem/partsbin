@@ -1,6 +1,7 @@
 /*
    Copyright 2020 Ali Raheem <ali.raheem@gmail.com>
-   Licensed under the Apache License, Version 2.0 (the "License");
+
+    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
        http://www.apache.org/licenses/LICENSE-2.0
@@ -57,7 +58,7 @@ module UART_RX (clk, rst, rx, data, data_ready);
 	   STATE_START: begin
 	      data_ready <= 0;
 	      counter <= counter + 1;
-	      if (counter == BITLEN/2) begin
+	      if (counter == BITLEN/2 - 2) begin
 		 STATE <= STATE_READING;
 		 counter <= 0;
 	      end
@@ -67,7 +68,7 @@ module UART_RX (clk, rst, rx, data, data_ready);
 	   
 	   STATE_READING: begin
 	      counter <= counter + 1;
-	      if (counter == BITLEN) begin
+	      if (counter == BITLEN - 1) begin
 		 readbuffer[BITS - 2:0]  <= readbuffer[BITS - 1:1];
 		 readbuffer[BITS - 1] <= rx;
 		 counter <= 0;
@@ -80,7 +81,7 @@ module UART_RX (clk, rst, rx, data, data_ready);
 	   end // case: STATE_READING
 	   STATE_PARITY: begin
 	      counter <= counter + 1;
-	      if (counter == BITLEN) begin
+	      if (counter == BITLEN - 1) begin
 		 if (rx == ((PARITY == 1)? ~^readbuffer : ^readbuffer)) begin
 		    STATE <= STATE_STOP;
 		    counter <= 0;
@@ -91,7 +92,7 @@ module UART_RX (clk, rst, rx, data, data_ready);
 	   end
 	   STATE_STOP: begin
 	      counter <= counter + 1;
-	      if (counter == BITLEN * STOPBITS) begin
+	      if (counter == (BITLEN - 1) * STOPBITS) begin
 		 STATE <= STATE_WAIT;
 		 counter <= 0;
 		 bitsread <= 0;
