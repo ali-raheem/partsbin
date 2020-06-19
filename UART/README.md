@@ -84,6 +84,42 @@ Default is 8N1 mode, 8 bits, no parity and 1 stop.
 
 ![UART_TX sending data](waveform_UART_TX.png)
 
+## Usage
+
+Generated with `yosys -p "ice40_synth"`
+
+### UART_RX
+```
+   Number of wires:                 38
+   Number of wire bits:            127
+   Number of public wires:          38
+   Number of public wire bits:     127
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 82
+     SB_CARRY                        5
+     SB_DFF                          4
+     SB_DFFE                         1
+     SB_DFFESR                      25
+     SB_LUT4                        47
+```
+###  UART_TX
+```
+   Number of wires:                 35
+   Number of wire bits:            102
+   Number of public wires:          35
+   Number of public wire bits:     102
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 67
+     SB_CARRY                        5
+     SB_DFF                          4
+     SB_DFFE                         1
+     SB_DFFESR                      18
+     SB_LUT4                        39
+```
 ## TODO
 
 * Error signal  (frame error etc).
