@@ -8,3 +8,7 @@
 * ie - Input Enable
 * oe - Output Enable
 * rst - Asynchronous reset
+
+## Simulation
+
+[!SIPO simulation](waveform.png)
