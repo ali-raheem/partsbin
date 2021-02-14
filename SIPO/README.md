@@ -11,4 +11,4 @@
 
 ## Simulation
 
-[!SIPO simulation](waveform.png)
+![SIPO simulation](waveform.png)
