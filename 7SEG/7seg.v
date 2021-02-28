@@ -1,5 +1,5 @@
 /*
-   Copyright 2018 Ali Raheem <ali.raheem@gmail.com>
+   Copyright 2018, 2021 Ali Raheem <ali.raheem@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,9 +13,10 @@
    See the License for the specific language governing permissions and limitations under the License.
 */
 
-module sseg (in, out_q, oe);
+module sseg (in, invert, out_q, oe);
    input [3:0] in;
    input       oe;
+	input invert;
    output wire [6:0] out_q;
    reg [6:0] 	     out_d;
    
@@ -49,5 +50,5 @@ module sseg (in, out_q, oe);
      endcase // case (sel)
    end // always @ (in)
 
-   assign out_q = oe? out_d : 7'bZZZZZZZ;
+   assign out_q = oe? (invert? ~out_d : out_d) : 7'bZZZZZZZ;
 endmodule // sseg
