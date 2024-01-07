@@ -1,5 +1,5 @@
 /*
-   Copyright 2018 Ali Raheem <ali.raheem@gmail.com>
+   Copyright 2024 Ali Raheem <ali.raheem@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,25 +13,31 @@
    See the License for the specific language governing permissions and limitations under the License.
 */
 
-module piso (clk, shld, q_n, q, ser, parin);
-   parameter WIDTH = 8;
-   input clk;
-   input shld;
-   input ser;
-   input [WIDTH-1:0] parin;
-   output q_n;
-   output q;
+module HC1645 (
+    input wire clk,
+    input wire clk_inh,
+    input wire shld,
+    input wire rst,
+    input wire [7:0] data_in,
+    input wire shift_in,
+    output wire q,
+    output wire q_n
+);
+    reg [7:0] shift_reg = 8'b0;
 
-   reg [WIDTH-1:0] data;
-   
-   always @ (posedge clk)
-      if (shld) begin
-	 data[WIDTH-2:0] <= data[WIDTH-1:1];
-	 data[WIDTH-1] <= ser;
-      end
+    always @(posedge clk or posedge clk_inh or posedge rst) begin
+        if (rst) begin
+            shift_reg <= 1'b0;
+        end else if (clk != clk_inh) begin
+            if (!shld) begin
+            shift_reg <= data_in;
+            end else begin
+                shift_reg <= {shift_reg[6:0], shift_in};
+            end
+        end
+    end
 
-   always @ (negedge shld) data <= parin;
+    assign q = shift_reg[7];
+    assign q_n = ~shift_reg[7];
 
-   assign q = data[0];
-   assign q_n = ~data[0];
-endmodule // piso
+endmodule // HC1645
