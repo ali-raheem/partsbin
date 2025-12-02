@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Ali Raheem <ali.raheem@gmail.com>
+   Copyright 2024, 2025 Ali Raheem <ali.raheem@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -25,12 +25,12 @@ module HC1645 (
 );
     reg [7:0] shift_reg = 8'b0;
 
-    always @(posedge clk or posedge clk_inh or posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if (rst) begin
-            shift_reg <= 1'b0;
-        end else if (clk != clk_inh) begin
+            shift_reg <= 8'b0;
+        end else if (!clk_inh) begin
             if (!shld) begin
-            shift_reg <= data_in;
+                shift_reg <= data_in;
             end else begin
                 shift_reg <= {shift_reg[6:0], shift_in};
             end
