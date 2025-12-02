@@ -1,5 +1,5 @@
 /*
-   Copyright 2020 Ali Raheem <github@shoryuken.me>
+   Copyright 2020, 2025 Ali Raheem <github@shoryuken.me>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -32,12 +32,10 @@ module memmux(switch, mADDR_M, mDATA_M, mADDR_V, mDATA_V, sADDR_A, sDATA_A, sADD
    
    assign mDATA_V = switch ? sDATA_B : sDATA_A;
 
-   assign sDATA_A = switch ? mDATA_M : {DATA_WIDTH{1'bZ}};
-   assign sDATA_B = !switch ? mDATA_M : {DATA_WIDTH{1'bZ}};
-   assign sADDR_A = switch ? mADDR_M : mADDR_V;
-   assign sADDR_B = !switch ? mADDR_M : mADDR_V;
+   assign sDATA_A = switch ? {DATA_WIDTH{1'bZ}} : mDATA_M;
+   assign sDATA_B = switch ? mDATA_M : {DATA_WIDTH{1'bZ}};
+   assign sADDR_A = switch ? mADDR_V : mADDR_M;
+   assign sADDR_B = switch ? mADDR_M : mADDR_V;
 
 
 endmodule // memmux
-
-
