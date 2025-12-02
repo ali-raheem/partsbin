@@ -1,5 +1,6 @@
+```verilog
 /*
-   Copyright 2020 Ali Raheem <ali.raheem@gmail.com>
+   Copyright 2020, 2025 Ali Raheem <ali.raheem@gmail.com>
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
@@ -108,7 +109,7 @@ module EM4100(
    assign CP2 = ^{
 		  data[2], data[6], data[10], data[14],
 		  data[18], data[22], data[26], data[30],
-		  data[34], data[28]
+		  data[34], data[38]
 		  };
    assign CP3 = ^{
 		  data[3], data[7], data[11], data[15],
@@ -117,3 +118,4 @@ module EM4100(
 		  };
    assign q = (tx & sending) ? out ^ clk : 1'bZ;
 endmodule // em4100
+```
