@@ -1,3 +1,17 @@
 *~
 */*~
-*/*.vcd
+
+# Simulation outputs
+*.vcd
+*.fst
+*.gtkw
+*.vvp
+*.out
+
+# Common build artifacts
+a.out
+
+# Gowin generated outputs (keep sources, ignore build dirs)
+GOWIN/**/impl/
+GOWIN/**/temp/
+GOWIN/**/*.gprj.user
